@@ -7,6 +7,7 @@ import CreateAccount from "./Components/createAccount";
 import MainPage from "./Components/mainPage";
 import ProtectedRoute from "./Components/protectedRoute";
 import OverallResumeAnalyzer from "./Components/overallResumeAnanlyzer";
+import JDresumeAnalyzer from "./Components/jdresumeAnalyzer";
 
 function App() {
   return (
@@ -39,8 +40,14 @@ function App() {
           />
           <Route
             path="/overallResumeAnalyzer"
-            element={<OverallResumeAnalyzer />}
+            element={<ProtectedRoute>
+              <OverallResumeAnalyzer />
+            </ProtectedRoute>}
           />
+
+          <Route path="/jdResumeAnalyzer" element={<ProtectedRoute>
+            <JDresumeAnalyzer/>
+          </ProtectedRoute>}/>
         </Routes>
       </BrowserRouter>
     </>
