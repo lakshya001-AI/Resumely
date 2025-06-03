@@ -475,6 +475,38 @@ html, body{
   margin-right: 30px;
 }
 
+.reviewParaDiv {
+  margin-top: 50px;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  color: rgb(181, 181, 181);
+}
+
+.reviewParaDiv p {
+  margin: 0; /* Removes default margin */
+  display: flex;
+  align-items: center; /* Aligns items vertically */
+  gap: 5px; /* Adds space between items */
+}
+
+.reviewParaDiv strong {
+  font-weight: bold;
+  margin-right: 5px; /* Adds space after "EXCELLENT" */
+}
+
+.reviewParaDiv i {
+  color: #B197FC;
+  margin: 0 1px; /* Adds spacing around icons */
+}
+
+.reviewParaDiv .reviews {
+  margin-left: 10px; /* Adds space between stars and review count */
+  display: flex;
+  align-items: center; /* Aligns text and icon properly */
+}
+
+
 
 
 
