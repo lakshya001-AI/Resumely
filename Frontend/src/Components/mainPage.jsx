@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 function MainPage() {
   const navigate = useNavigate();
   const [showUserInfo, setShowUserInfo] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const videoRef = useRef(null);
 
   // User data from localStorage
@@ -58,6 +59,22 @@ function MainPage() {
           <div className={Style.logoNavBarMainPage}>
             <h1>Resumely</h1>
           </div>
+
+          <div className={Style.linkNavBarMainPage}>
+              <Link className={Style.linkElementNavBar} to="/mainPage">
+                Home
+              </Link>
+              <Link className={Style.linkElementNavBar}>
+                Resume
+              </Link>
+              <Link className={Style.linkElementNavBar}>
+                Cover Letter
+              </Link>
+              <Link className={Style.linkElementNavBar}>
+                Pricing
+              </Link>
+            </div>
+          
           <div className={Style.ProfileBtnNavBarMainPage}>
             <button
               className={Style.profileBtn}
@@ -100,7 +117,7 @@ function MainPage() {
               <button className={Style.analysisBtn} onClick={createResume}>
                 Create My Resume
               </button>
-              <button className={Style.analysisBtn}>Analyze My Resume</button>
+              <button className={Style.analysisBtn} onClick={()=> setShowPopup(true)}>Analyze My Resume</button>
             </div>
 
             <div className={Style.imageAndContentDiv}>
@@ -140,21 +157,23 @@ function MainPage() {
             </div>
 
             <div className={Style.reviewParaDiv}>
-  <p>
-    <strong>EXCELLENT</strong>
-    <i className="fa-solid fa-star"></i>
-    <i className="fa-solid fa-star"></i>
-    <i className="fa-solid fa-star"></i>
-    <i className="fa-solid fa-star"></i>
-    <i className="fa-solid fa-star-half-stroke"></i>
-    <span className="reviews">
-      <strong>15,047 reviews on</strong>
-      <i className="fa-solid fa-star" style={{ marginLeft: "5px" }}></i>
-      <span>Trustpilot</span>
-    </span>
-  </p>
-</div>
-
+              <p>
+                <strong>EXCELLENT</strong>
+                <i className="fa-solid fa-star"></i>
+                <i className="fa-solid fa-star"></i>
+                <i className="fa-solid fa-star"></i>
+                <i className="fa-solid fa-star"></i>
+                <i className="fa-solid fa-star-half-stroke"></i>
+                <span className="reviews">
+                  <strong>15,047 reviews on</strong>
+                  <i
+                    className="fa-solid fa-star"
+                    style={{ marginLeft: "5px" }}
+                  ></i>
+                  <span>Trustpilot</span>
+                </span>
+              </p>
+            </div>
           </div>
 
           {/* This div is for the side image */}
@@ -169,6 +188,21 @@ function MainPage() {
           </div>
         </div>
       </div>
+       {/* Popup Overlay */}
+      {showPopup && (
+        <div className={Style.popupOverlay} onClick={() => setShowPopup(false)}>
+          <div
+            className={Style.popupContent}
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+          >
+            <h2>Choose Your Analysis</h2>
+            <Link className={Style.popupBtn} to="/overallResumeAnalyzer">General Resume Score</Link>
+            <Link className={Style.popupBtn} to="/jdResumeAnalyzer">
+              Score Based on Job Description
+            </Link>
+          </div>
+        </div>
+      )}
       <ToastContainer />
     </div>
   );

@@ -1,91 +1,114 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { Gauge } from '@mui/x-charts'; // Correct import from MUI X Charts
+import React, { useState, useRef, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Style from "../App.module.css";
+import axios from "axios";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import { ToastContainer, toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function OverallResumeAnalyzer() {
+  const navigate = useNavigate();
+  const [showUserInfo, setShowUserInfo] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const videoRef = useRef(null);
 
-    const [file, setFile] = useState(null);
-    const [response, setResponse] = useState(null);
-    const [error, setError] = useState(null);
+  // User data from localStorage
+  const userFirstName = localStorage.getItem("userFirstName") || "John";
+  const userLastName = localStorage.getItem("userLastName") || "Doe";
+  const userEmailAddress =
+    localStorage.getItem("userEmailAddress") || "john.doe@example.com";
 
-    const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
-    };
+  // Handle logout
+  const logoutUser = () => {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("userFirstName");
+    localStorage.removeItem("userLastName");
+    localStorage.removeItem("userEmailAddress");
+    navigate("/");
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!file) {
-            setError("Please upload a file.");
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('resume', file);
-
-        try {
-            const res = await axios.post('http://127.0.0.1:3000/analyze-resume', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-            setResponse(res.data);
-            setError(null);
-        } catch (err) {
-            setError(err.response?.data?.error || "An error occurred.");
-        }
-    };
-
-    const getScoreDescription = (score) => {
-        if (score < 30) {
-            return 'Your resume score is poor. Consider improving your resume.';
-        } else if (score >= 30 && score < 75) {
-            return 'Your resume score is good. Keep improving!';
-        } else if (score >= 75) {
-            return 'Your resume score is excellent! Great job!';
-        }
-        return '';
-    };
-
-    return (
-        <>
-            <div>
-                <h1>Resume Analyzer</h1>
-                <form onSubmit={handleSubmit}>
-                    <input type="file" accept="application/pdf" onChange={handleFileChange} />
-                    <button type="submit">Analyze Resume</button>
-                </form>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
-                {response && (
-                    <div>
-                        <h2>Analysis</h2>
-                        <p><strong>Name:</strong> {response.user_name}</p>
-                        <p><strong>Score:</strong> {response.score}</p>
-                        <p>{getScoreDescription(response.score)}</p>
-                        <p><strong>Suggestions:</strong> {response.suggestions.join(', ')}</p>
-                        <p><strong>Recommended Skills:</strong> {response.recommended_skills.join(', ')}</p>
-                        <h3>Tips</h3>
-                        <ul>
-                            {response.resume_tips.map((tip, index) => (
-                                <li key={index}>{tip}</li>
-                            ))}
-                        </ul>
-
-                        {/* Material UI Gauge */}
-                        <div style={{ width: '200px', height: '200px', margin: 'auto' }}>
-                            <Gauge
-                                value={response.score}
-                                min={0}
-                                max={100}
-                                startAngle={-90}
-                                endAngle={90}
-                                color={response.score < 30 ? 'red' : response.score < 75 ? 'orange' : 'green'}
-                            />
-                        </div>
-                    </div>
-                )}
+  return (
+    <>
+      <div className={Style.mainDiv}>
+        <div className={Style.mainPageMainDiv}>
+          {/* Navigation Bar */}
+          <div className={Style.navBarMainPage}>
+            <div className={Style.logoNavBarMainPage}>
+              <h1>Resumely</h1>
             </div>
-        </>
-    );
+
+            <div className={Style.linkNavBarMainPage}>
+              <Link className={Style.linkElementNavBar} to="/mainPage">
+                Home
+              </Link>
+              <Link className={Style.linkElementNavBar}>Resume</Link>
+              <Link className={Style.linkElementNavBar}>Cover Letter</Link>
+              <Link className={Style.linkElementNavBar}>Pricing</Link>
+            </div>
+
+            <div className={Style.ProfileBtnNavBarMainPage}>
+              <button
+                className={Style.profileBtn}
+                onClick={() => setShowUserInfo(!showUserInfo)}
+              >
+                Profile
+              </button>
+              {showUserInfo && (
+                <div className={Style.userInfoDiv}>
+                  <p className={Style.userInfoDivPara1}>
+                    {`${userFirstName} ${userLastName}`}
+                  </p>
+                  <p className={Style.userInfoDivPara2}>{userEmailAddress}</p>
+                  <button className={Style.logoutBtn} onClick={logoutUser}>
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* MainDiv for taking the user resume file and button for analysis */}
+          {/* Design this div with light white color border and in modern lock with shadow */}
+          {/* Properly format the heading and para */}
+          <div className={Style.mainDivContent}>
+  <h1 className={Style.heading}>AI Resume Analyzer</h1>
+  <p className={Style.description}>
+    Unlock the potential of your resume with our AI-powered Resume Analyzer. This cutting-edge tool leverages natural language processing to extract key details, score your resume, and provide actionable suggestions for improvement.
+  </p>
+  <div className={Style.features}>
+    <div className={Style.featureItem}>
+      <p>Extracts key details like name, email, skills, and experience.</p>
+    </div>
+    <div className={Style.featureItem}>
+      <p>Scores your resume based on essential criteria.</p>
+    </div>
+    <div className={Style.featureItem}>
+      <p>Provides personalized suggestions for improvement.</p>
+    </div>
+  </div>
+  <div className={Style.uploadSection}>
+    <form>
+      <label htmlFor="resume" className={Style.uploadLabel}>
+        Upload your resume (PDF only)
+      </label>
+      <input
+        type="file"
+        id="resume"
+        accept="application/pdf"
+        className={Style.resumeInput}
+      />
+      <button type="submit" className={Style.analyzeBtn}>
+        Analyze Resume
+      </button>
+    </form>
+  </div>
+</div>
+
+        
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default OverallResumeAnalyzer;

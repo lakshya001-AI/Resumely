@@ -6,8 +6,8 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import CreateAccount from "./Components/createAccount";
 import MainPage from "./Components/mainPage";
 import ProtectedRoute from "./Components/protectedRoute";
-import OverallResumeAnalyzer from "./Components/overallResumeAnanlyzer";
 import JDresumeAnalyzer from "./Components/jdresumeAnalyzer";
+import OverallResumeAnalyzer from "./Components/overallResumeAnanlyzer";
 
 function App() {
   return (
@@ -41,7 +41,7 @@ function App() {
           <Route
             path="/overallResumeAnalyzer"
             element={<ProtectedRoute>
-              <OverallResumeAnalyzer />
+              <OverallResumeAnalyzer/>
             </ProtectedRoute>}
           />
 
