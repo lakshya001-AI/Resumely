@@ -71,40 +71,43 @@ function OverallResumeAnalyzer() {
           {/* Design this div with light white color border and in modern lock with shadow */}
           {/* Properly format the heading and para */}
           <div className={Style.mainDivContent}>
-  <h1 className={Style.heading}>AI Resume Analyzer</h1>
-  <p className={Style.description}>
-    Unlock the potential of your resume with our AI-powered Resume Analyzer. This cutting-edge tool leverages natural language processing to extract key details, score your resume, and provide actionable suggestions for improvement.
-  </p>
-  <div className={Style.features}>
-    <div className={Style.featureItem}>
-      <p>Extracts key details like name, email, skills, and experience.</p>
-    </div>
-    <div className={Style.featureItem}>
-      <p>Scores your resume based on essential criteria.</p>
-    </div>
-    <div className={Style.featureItem}>
-      <p>Provides personalized suggestions for improvement.</p>
-    </div>
-  </div>
-  <div className={Style.uploadSection}>
-    <form>
-      <label htmlFor="resume" className={Style.uploadLabel}>
-        Upload your resume (PDF only)
-      </label>
-      <input
-        type="file"
-        id="resume"
-        accept="application/pdf"
-        className={Style.resumeInput}
-      />
-      <button type="submit" className={Style.analyzeBtn}>
-        Analyze Resume
-      </button>
-    </form>
-  </div>
-</div>
-
-        
+            <h1 className={Style.heading}>AI Resume Analyzer</h1>
+            <p className={Style.description}>
+              Unlock the potential of your resume with our AI-powered Resume
+              Analyzer. This cutting-edge tool leverages natural language
+              processing to extract key details, score your resume, and provide
+              actionable suggestions for improvement.
+            </p>
+            <div className={Style.features}>
+              <div className={Style.featureItem}>
+                <p>
+                  Extracts key details like name, email, skills, and experience.
+                </p>
+              </div>
+              <div className={Style.featureItem}>
+                <p>Scores your resume based on essential criteria.</p>
+              </div>
+              <div className={Style.featureItem}>
+                <p>Provides personalized suggestions for improvement.</p>
+              </div>
+            </div>
+            <div className={Style.uploadSection}>
+              <form>
+                <label htmlFor="resume" className={Style.uploadLabel}>
+                  Upload your resume (PDF only)
+                </label>
+                <input
+                  type="file"
+                  id="resume"
+                  accept="application/pdf"
+                  className={Style.resumeInput}
+                />
+                <button type="submit" className={Style.analyzeBtn}>
+                  Analyze Resume
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </>

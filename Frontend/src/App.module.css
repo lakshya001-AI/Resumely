@@ -566,40 +566,53 @@ html, body{
 }
 
 .mainDivContent {
-  background: linear-gradient(to right, #4776e6, #8e54e9);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(207, 207, 207, 0.077); /* Semi-transparent white */
+  backdrop-filter: blur(10px); /* Frosted glass effect */
+  -webkit-backdrop-filter: blur(10px); /* For Safari support */
+  border: 1px solid rgba(255, 255, 255, 0.563); /* Light border */
   box-shadow: 0 8px 15px rgba(255, 255, 255, 0.5); /* White shadow */
   border-radius: 12px;
-  padding: 20px;
-  max-width: 600px;
-  margin: 20px auto;
+  padding: 20px 70px;
+  max-width: 80vmax;
+  height: 35vmax;
+  margin: 60px auto;
   color: white;
   font-family: 'Arial', sans-serif;
+  text-align: center;
 }
 
 .heading {
-  font-size: 2rem;
+  font-size: 3rem;
   margin-bottom: 15px;
   text-align: center;
   color: #ffffff;
 }
 
 .description {
-  font-size: 1rem;
+  font-size: 1.2rem;
   margin-bottom: 15px;
   line-height: 1.6;
+  color: rgb(232, 232, 232);
 }
 
 .features {
-  margin: 20px 0;
+  margin: 30px 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .featureItem {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 10px;
+ background: linear-gradient(to right, #4776e6, #8e54e9);
+  padding: 30px;
   border-radius: 8px;
-  margin-bottom: 10px;
+  margin: 10px;
   text-align: center;
+}
+
+.featureItem p{
+  font-size: 1.1rem;
 }
 
 .uploadSection {
@@ -643,23 +656,29 @@ html, body{
 }
 
 .analyzeBtn {
-  background: #ffffff;
-  color: #4776e6;
-  border: none;
-  border-radius: 8px;
+  background: rgba(194, 194, 194, 0.125); /* Transparent white */
+  backdrop-filter: blur(14px); /* Frosted glass effect */
+  -webkit-backdrop-filter: blur(10px); /* Frosted effect for Safari */
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Light white border */
+  border-radius: 12px;
   padding: 15px 20px;
   font-size: 1rem;
-  font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
   display: block;
-  margin: 20px auto;
+  margin: 30px auto;
+  width: 20vmax;
+  color: #ffffff; /* White text for contrast */
+  text-transform: uppercase; /* Optional for a modern look */
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2); /* Subtle shadow */
 }
 
 .analyzeBtn:hover {
-  background: #4776e6;
-  color: #ffffff;
+  background: rgba(236, 236, 236, 0.125); /* More opaque on hover */
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.4); /* Enhanced shadow */
+  transform: scale(1.05); /* Slight zoom on hover */
 }
+
 
 
 
