@@ -5,11 +5,15 @@ import axios from "axios";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Gauge } from "@mui/x-charts"; // Correct import from MUI X Charts
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 function OverallResumeAnalyzer() {
   const navigate = useNavigate();
   const [showUserInfo, setShowUserInfo] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [loading, setLoading] = useState(false);
   const videoRef = useRef(null);
 
   // User data from localStorage
@@ -27,57 +31,131 @@ function OverallResumeAnalyzer() {
     navigate("/");
   };
 
+  const [file, setFile] = useState(null);
+  const [response, setResponse] = useState(null);
+  const [error, setError] = useState(null);
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    if (!file) {
+      toast.warn("Please upload a file!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+        className: Style.customToast,
+      });
+      setLoading(false);
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("resume", file);
+
+    try {
+      const res = await axios.post(
+        "http://127.0.0.1:3000/analyze-resume",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setResponse(res.data);
+      setShowPopup(true);
+    } catch (err) {
+      toast.error("An error occurred in getting the response!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+        className: Style.customToast,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getScoreDescription = (score) => {
+    if (score < 30) {
+      return "Your resume score is poor. Consider improving your resume.";
+    } else if (score >= 30 && score < 75) {
+      return "Your resume score is good. Keep improving!";
+    } else if (score >= 75) {
+      return "Your resume score is excellent! Great job!";
+    }
+    return "";
+  };
+
   return (
     <>
       <div className={Style.mainDiv}>
         <div className={Style.mainPageMainDiv}>
-          {/* Navigation Bar */}
-          <div className={Style.navBarMainPage}>
-            <div className={Style.logoNavBarMainPage}>
-              <h1>Resumely</h1>
-            </div>
+          {
+            /* Navigation Bar */
+            <div className={Style.navBarMainPage}>
+              <div className={Style.logoNavBarMainPage}>
+                <h1>Resumely</h1>
+              </div>
 
-            <div className={Style.linkNavBarMainPage}>
-              <Link className={Style.linkElementNavBar} to="/mainPage">
-                Home
-              </Link>
-              <Link className={Style.linkElementNavBar}>Resume</Link>
-              <Link className={Style.linkElementNavBar}>Cover Letter</Link>
-              <Link className={Style.linkElementNavBar}>Pricing</Link>
-            </div>
+              <div className={Style.linkNavBarMainPage}>
+                <Link className={Style.linkElementNavBar} to="/mainPage">
+                  Home
+                </Link>
+                <Link className={Style.linkElementNavBar}>Resume</Link>
+                <Link className={Style.linkElementNavBar}>Cover Letter</Link>
+                <Link className={Style.linkElementNavBar}>Pricing</Link>
+              </div>
 
-            <div className={Style.ProfileBtnNavBarMainPage}>
-              <button
-                className={Style.profileBtn}
-                onClick={() => setShowUserInfo(!showUserInfo)}
-              >
-                Profile
-              </button>
-              {showUserInfo && (
-                <div className={Style.userInfoDiv}>
-                  <p className={Style.userInfoDivPara1}>
-                    {`${userFirstName} ${userLastName}`}
-                  </p>
-                  <p className={Style.userInfoDivPara2}>{userEmailAddress}</p>
-                  <button className={Style.logoutBtn} onClick={logoutUser}>
-                    Logout
-                  </button>
-                </div>
-              )}
+              <div className={Style.ProfileBtnNavBarMainPage}>
+                <button
+                  className={Style.profileBtn}
+                  onClick={() => setShowUserInfo(!showUserInfo)}
+                >
+                  Profile
+                </button>
+                {showUserInfo && (
+                  <div className={Style.userInfoDiv}>
+                    <p className={Style.userInfoDivPara1}>
+                      {`${userFirstName} ${userLastName}`}
+                    </p>
+                    <p className={Style.userInfoDivPara2}>{userEmailAddress}</p>
+                    <button className={Style.logoutBtn} onClick={logoutUser}>
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          }
 
-          {/* MainDiv for taking the user resume file and button for analysis */}
-          {/* Design this div with light white color border and in modern lock with shadow */}
-          {/* Properly format the heading and para */}
           <div className={Style.mainDivContent}>
+            {/* heading */}
             <h1 className={Style.heading}>AI Resume Analyzer</h1>
+            {/* Para */}
             <p className={Style.description}>
               Unlock the potential of your resume with our AI-powered Resume
               Analyzer. This cutting-edge tool leverages natural language
               processing to extract key details, score your resume, and provide
               actionable suggestions for improvement.
             </p>
+            {/* Features */}
             <div className={Style.features}>
               <div className={Style.featureItem}>
                 <p>
@@ -92,7 +170,7 @@ function OverallResumeAnalyzer() {
               </div>
             </div>
             <div className={Style.uploadSection}>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <label htmlFor="resume" className={Style.uploadLabel}>
                   Upload your resume (PDF only)
                 </label>
@@ -101,14 +179,85 @@ function OverallResumeAnalyzer() {
                   id="resume"
                   accept="application/pdf"
                   className={Style.resumeInput}
+                  onChange={handleFileChange}
                 />
                 <button type="submit" className={Style.analyzeBtn}>
-                  Analyze Resume
+                  {loading ? (
+                    <Box sx={{ display: "flex", justifyContent: "center" }}>
+                      <CircularProgress size={24} sx={{ color: "white" }} />
+                    </Box>
+                  ) : (
+                    "Analyze Resume"
+                  )}
                 </button>
               </form>
             </div>
           </div>
         </div>
+        {showPopup && response && (
+          <div className={Style.OverAllResumePopupOverlay}>
+            <div className={Style.OverAllResumepopupContent}>
+              <h2>Analysis</h2>
+              <div className={Style.gaugeDiv}>
+                <Gauge
+                  value={response.score}
+                  min={0}
+                  max={100}
+                  startAngle={-90}
+                  endAngle={90}
+                  className={Style.customGauge}
+                />
+              </div>
+              <p className={Style.userNameAndScorePara}>
+                {response.user_name
+                  ? `${response.user_name}, your resume has scored ${
+                      response.score
+                    }. ${getScoreDescription(response.score)}`
+                  : `Your resume has scored ${
+                      response.score
+                    }. ${getScoreDescription(response.score)}`}
+              </p>
+
+              <div className={Style.suggestionDiv}>
+                <p className={Style.suggestionPara}>
+                <strong>Suggestions</strong> 
+              </p>
+              <p>
+{response.suggestions.join(", ")}
+              </p>
+              </div>
+
+                            <div className={Style.suggestionDiv}>
+                <p className={Style.suggestionPara}>
+                <strong>Recommended Skills</strong> 
+              </p>
+              <p>
+{response.recommended_skills.join(", ")}
+              </p>
+              </div>
+
+              <div className={Style.suggestionDiv}>
+                 <p className={Style.suggestionPara}>
+                <strong>Tips</strong> 
+              </p>
+            
+                {response.resume_tips.map((tip, index) => (
+                  <p key={index}>{tip}</p>
+                ))}
+           
+              </div>
+
+
+              <button
+                className={Style.closeBtn}
+                onClick={() => setShowPopup(false)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+        <ToastContainer />
       </div>
     </>
   );
