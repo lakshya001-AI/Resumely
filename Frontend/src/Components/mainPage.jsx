@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Style from "../App.module.css";
 import axios from "axios";
-import CircularProgress from "@mui/material/CircularProgress";
-import Box from "@mui/material/Box";
-import Alert from "@mui/material/Alert";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 function MainPage() {
   const navigate = useNavigate();
@@ -157,161 +155,66 @@ function MainPage() {
           </div>
         </div>
 
-        {/* Main Content */}
-        <div className={Style.contentDivMainPage}>
-          <div className={Style.converterHeadingDiv}>
-            <h1>
-              <span className={Style.cryptoCurrencyText}>AspireBot</span> - Your
-              Career Guide
-            </h1>
-          </div>
-          <div className={Style.sendCryptoCurrencyMainDiv}>
-            <div className={Style.sendCryptoCurrencyContentDiv}>
-              <div className={Style.mainDivInvestment}>
-                <p className={Style.investmentPara}>
-                  AspireBot leverages advanced AI technologies to provide
-                  personalized career guidance. Powered by LangChain, Cohere,
-                  and Gemini, it analyzes your interests, skills, and goals to
-                  suggest tailored career paths, essential skills to learn, and
-                  curated resources to help you succeed in your professional
-                  journey.
+        <div className={Style.mainPageContentDiv}>
+          {/* This div is for the heading and para */}
+          <div className={Style.mainPageContentDiv1}>
+            <h1 className={Style.getStartedHeading}>Get Expert Feedback on your <span className={Style.cryptoCurrencyText}>Resume</span>, instantly</h1>
+            <p className={Style.paraMainPageContentDiv}>
+              Get hired faster with an ATS-friendly resume. Our free ATS Resume Checker scans for 30+ criteria and delivers instant suggestions to improve your resume score — right from your desktop or mobile device.Our free AI-Powered resume checker scores your resume on key criteria recruiters and hiring managers look for. Get actionable
+              steps to revamp your resume and land more interviews.
+            </p>
+
+            <div className={Style.btnDivs}>
+<button className={Style.analysisBtn}>Create My Resume</button>
+            <button className={Style.analysisBtn}>Analyze My Resume</button>
+            </div>
+            
+            
+            <div className={Style.imageAndContentDiv}> 
+              <div className={Style.imageContentDiv}>
+                <div className={Style.imageDivImageContentDiv}>
+                  <img
+                    src="https://www.myperfectresume.com/wp-content/uploads/2025/05/Elizabeth-Muenzen-Author-Photo-scaled.jpg?w=150"
+                    alt=""
+                  />
+                </div>
+                <div>
+                  <p>
+                    By <strong>Elizabeth Muenzen, CPRW</strong>
+                  </p>
+                  <p>Career Advice Writer</p>
+                  <p>
+                    Last Updated: <strong>January 22, 2025</strong>
+                  </p>
+                </div>
+              </div>
+              <div className={Style.OtherInfoDiv}>
+                <p>
+                  <i
+                    className="fa-solid fa-arrow-up"
+                    style={{ color: "#ffffff" }}
+                  ></i>{" "}
+                   30% higher chance of getting a job
                 </p>
-                <div className={Style.logoMainDiv}>
-                  <div className={Style.imageContainerDiv}>
-                    <img
-                      src="https://logowik.com/content/uploads/images/google-ai-gemini91216.logowik.com.webp"
-                      alt="Gemini Logo"
-                    />
-                  </div>
-                  <div className={Style.imageContainerDiv}>
-                    <img
-                      src="https://images.seeklogo.com/logo-png/61/1/langchain-logo-png_seeklogo-611654.png"
-                      alt="LangChain Logo"
-                    />
-                  </div>
-                  <div className={Style.imageContainerDiv}>
-                    <img
-                      src="https://logowik.com/content/uploads/images/cohere-new9011.logowik.com.webp"
-                      alt="Cohere Logo"
-                    />
-                  </div>
-                </div>
-                <div className={Style.getStartedBtnDiv}>
-                  <button onClick={() => setShowPopup(true)}>
-                    Get Started
-                  </button>
-                </div>
+                 <p>
+                  <i
+                    className="fa-solid fa-arrow-up"
+                    style={{ color: "#ffffff" }}
+                  ></i>{" "}
+                  42% higher response rate from recruiters
+                </p>
               </div>
             </div>
           </div>
+
+          {/* This div is for the side image */}
+         <div className={Style.mainPageContentDiv2}>
+  <video src="\Assets\resume_score_left-ByFEivQ5.mp4" autoplay loop muted controls className={Style.hiddenControls}></video>
+
+</div>
+
         </div>
       </div>
-
-      {/* Popup Form */}
-      {showPopup && (
-        <div className={Style.popupOverlay}>
-          <div className={Style.popupContent}>
-            <h2>Enter Your Career Preferences</h2>
-            {error && (
-              <Alert severity="error" sx={{ mb: 2 }}>
-                {error}
-              </Alert>
-            )}
-            <form onSubmit={handleSubmit}>
-              <label>
-                Interests
-                <input
-                  type="text"
-                  name="interest"
-                  value={formData.interest}
-                  onChange={handleChange}
-                  required
-                  placeholder="e.g., Web Development, Data Science, AI"
-                />
-              </label>
-              <label>
-                Skills to Learn
-                <input
-                  type="text"
-                  name="skills"
-                  value={formData.skills}
-                  onChange={handleChange}
-                  required
-                  placeholder="e.g., JavaScript, React, Python"
-                />
-              </label>
-              <label>
-                Career Goals
-                <input
-                  type="text"
-                  name="goals"
-                  value={formData.goals}
-                  onChange={handleChange}
-                  required
-                  placeholder="e.g., Become a Full Stack Developer, Work in AI"
-                />
-              </label>
-              <div className={Style.popupActions}>
-                <button type="submit" disabled={loading}>
-                  {loading ? (
-                    <Box sx={{ display: "flex", justifyContent: "center" }}>
-  <CircularProgress size={24} sx={{ color: "white" }} />
-</Box>
-                  ) : (
-                    "Submit"
-                  )}
-                </button>
-                <button type="button" onClick={() => setShowPopup(false)}>
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Recommendation Popup */}
-      {recommendationPopUp && (
-        <div className={Style.recommendationPopUpOverlay}>
-          <div className={Style.recommendationPopUpContent}>
-            <div className={Style.courierRecommendationDiv}>
-              <h2>Career Recommendations</h2>
-            </div>
-            <div className={Style.recommendationBtnDivOption}>
-              <button
-                onClick={handleCohereClick}
-                className={showCohere ? Style.activeBtn : ""}
-              >
-                Cohere Recommendation
-              </button>
-              <button
-                onClick={handleGeminiClick}
-                className={showGemini ? Style.activeBtn : ""}
-              >
-                Gemini Recommendation
-              </button>
-            </div>
-            {showCohere && cohereRecommendation && (
-              <div className={Style.responseDiv}>
-                {formatRecommendation(cohereRecommendation)}
-              </div>
-            )}
-            {showGemini && geminiRecommendation && (
-              <div className={Style.responseDiv}>
-                {formatRecommendation(geminiRecommendation)}
-              </div>
-            )}
-             <div className={Style.courierRecommendationDivBtn}>
-              <button
-              className={Style.closeRecommendationBtn}
-              onClick={() => setRecommendationPopUp(false)}
-            >
-              Close
-            </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
