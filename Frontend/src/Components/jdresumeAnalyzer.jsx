@@ -1,96 +1,288 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Style from "../App.module.css";
+import axios from "axios";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import { ToastContainer, toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Gauge } from "@mui/x-charts"; // Correct import from MUI X Charts
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
-function JDresumeAnalyzer() {
-      const [resumeFile, setResumeFile] = useState(null);
-  const [jobDescription, setJobDescription] = useState("");
-  const [analysisResult, setAnalysisResult] = useState(null);
+function JDResumeAnalyzer() {
+  const navigate = useNavigate();
+  const [showUserInfo, setShowUserInfo] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const [loading, setLoading] = useState(false);
+  const videoRef = useRef(null);
 
-   const handleFileChange = (event) => {
-    setResumeFile(event.target.files[0]);
+  // User data from localStorage
+  const userFirstName = localStorage.getItem("userFirstName") || "John";
+  const userLastName = localStorage.getItem("userLastName") || "Doe";
+  const userEmailAddress =
+    localStorage.getItem("userEmailAddress") || "john.doe@example.com";
+
+  // Handle logout
+  const logoutUser = () => {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("userFirstName");
+    localStorage.removeItem("userLastName");
+    localStorage.removeItem("userEmailAddress");
+    navigate("/");
+  };
+
+  const [file, setFile] = useState(null);
+  const [jobDescription, setJobDescription] = useState("");
+  const [response, setResponse] = useState(null);
+  const [error, setError] = useState(null);
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
   };
 
   const handleJobDescriptionChange = (event) => {
     setJobDescription(event.target.value);
   };
 
-
-   const handleAnalyzeResume = async () => {
-    if (!resumeFile || !jobDescription) {
-      alert("Please upload a resume and enter a job description.");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    if (!file) {
+      toast.warn("Please upload a file!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+        className: Style.customToast,
+      });
+      setLoading(false);
       return;
     }
 
     const formData = new FormData();
-    formData.append("resume", resumeFile);
-    formData.append("job_description", jobDescription);
+    formData.append("resume", file);
+    formData.append("job_title", jobDescription.trim()); // Ensure no empty job descriptions
 
     try {
-      setLoading(true);
-      const response = await fetch("http://localhost:8000/analyze", {
-        method: "POST",
-        body: formData,
-      });
+      const res = await axios.post(
+        "http://localhost:8000/analyze-resume-with-title",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(res);
 
-      const result = await response.json();
-      setAnalysisResult(result);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error analyzing resume:", error);
+      setResponse(res.data);
+      setShowPopup(true);
+    } catch (err) {
+      toast.error("An error occurred in getting the response!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+        className: Style.customToast,
+      });
+    } finally {
       setLoading(false);
     }
   };
 
+  const getScoreDescription = (score) => {
+    if (score < 30) {
+      return "Your resume score is poor. Consider improving your resume.";
+    } else if (score >= 30 && score < 75) {
+      return "Your resume score is good. Keep improving!";
+    } else if (score >= 75) {
+      return "Your resume score is excellent! Great job!";
+    }
+    return "";
+  };
 
-  return <>
+  return (
+    <>
+      <div className={Style.mainDiv}>
+        <div className={Style.mainPageMainDiv}>
+          {
+            /* Navigation Bar */
+            <div className={Style.navBarMainPage}>
+              <div className={Style.logoNavBarMainPage}>
+                <h1>Resumely</h1>
+              </div>
 
-  <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
-      <h1 className="text-3xl font-bold mb-6">AI Resume Analyzer</h1>
-      <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-xl">
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Upload your Resume (PDF):
-          </label>
-          <input
-            type="file"
-            accept=".pdf"
-            onChange={handleFileChange}
-            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
-          />
+              <div className={Style.linkNavBarMainPage}>
+                <Link className={Style.linkElementNavBar} to="/mainPage">
+                  Home
+                </Link>
+                <Link className={Style.linkElementNavBar}>Resume</Link>
+                <Link className={Style.linkElementNavBar}>Cover Letter</Link>
+                <Link className={Style.linkElementNavBar}>Pricing</Link>
+              </div>
+
+              <div className={Style.ProfileBtnNavBarMainPage}>
+                <button
+                  className={Style.profileBtn}
+                  onClick={() => setShowUserInfo(!showUserInfo)}
+                >
+                  Profile
+                </button>
+                {showUserInfo && (
+                  <div className={Style.userInfoDiv}>
+                    <p className={Style.userInfoDivPara1}>
+                      {`${userFirstName} ${userLastName}`}
+                    </p>
+                    <p className={Style.userInfoDivPara2}>{userEmailAddress}</p>
+                    <button className={Style.logoutBtn} onClick={logoutUser}>
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          }
+
+          <div className={Style.mainDivContent}>
+            {/* heading */}
+            <h1 className={Style.heading}>SMART RESUME OPTIMIZER</h1>
+            {/* Para */}
+            <p className={Style.description}>
+              Elevate your career prospects with our AI-powered Smart Resume
+              Optimizer. This innovative tool extracts essential details,
+              analyzes your resume against job titles, and delivers actionable
+              suggestions to make your resume stand out.
+            </p>
+            {/* Features */}
+            <div className={Style.features}>
+              <div className={Style.featureItem}>
+                <p>
+                  Accurately extracts key information, including name, job
+                  title, skills, and experience.
+                </p>
+              </div>
+              <div className={Style.featureItem}>
+                <p>Calculates match scores based on the provided job title.</p>
+              </div>
+              <div className={Style.featureItem}>
+                <p>
+                  Offers personalized recommendations to enhance your resume.
+                </p>
+              </div>
+            </div>
+            <div className={Style.uploadSection}>
+              <form onSubmit={handleSubmit}>
+                <div className={Style.inputFieldForResumeAndJT}>
+                  <div className={Style.labelAndInputBalancer}>
+                    <label htmlFor="resume" className={Style.uploadLabel}>
+                      Upload your resume (PDF only)
+                    </label>
+                    <input
+                      type="file"
+                      id="resume"
+                      accept="application/pdf"
+                      className={Style.resumeInput}
+                      onChange={handleFileChange}
+                    />
+                  </div>
+
+                  <div className={Style.labelAndInputBalancer}>
+                    <label htmlFor="resume" className={Style.uploadLabel}>
+                      Please enter your Job title
+                    </label>
+                    <input
+                      type="text"
+                      id="resume"
+                      className={Style.resumeInputJT}
+                      value={jobDescription}
+                      onChange={handleJobDescriptionChange}
+                      placeholder="Job Title"
+                    />
+                  </div>
+                </div>
+                <button type="submit" className={Style.analyzeBtn}>
+                  {loading ? (
+                    <Box sx={{ display: "flex", justifyContent: "center" }}>
+                      <CircularProgress size={24} sx={{ color: "white" }} />
+                    </Box>
+                  ) : (
+                    "Analyze Resume"
+                  )}
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Enter Job Description:
-          </label>
-          <textarea
-            value={jobDescription}
-            onChange={handleJobDescriptionChange}
-            rows="5"
-            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg p-2 bg-gray-50 focus:outline-none"
-            placeholder="Paste the job description here..."
-          />
-        </div>
-        <button
-          onClick={handleAnalyzeResume}
-          className="w-full bg-blue-600 text-white font-medium py-2 rounded-lg hover:bg-blue-700 focus:outline-none"
-          disabled={loading}
-        >
-          {loading ? "Analyzing..." : "Analyze Resume"}
-        </button>
+        {showPopup && response && (
+          <div className={Style.JTPopupOverlay}>
+            <div className={Style.JTpopupContent}>
+              <h2>Analysis</h2>
+              <div className={Style.gaugeDiv}>
+                <Gauge
+                  value={Number(response.match_score)}
+                  min={0}
+                  max={100}
+                  startAngle={-90}
+                  endAngle={90}
+                  className={Style.customGauge}
+                />
+              </div>
+
+              <p className={Style.userNameAndScorePara}>
+                {response.parsed_resume.name
+                  ? `${response.parsed_resume.name}, your resume matches ${
+                      response.match_score
+                    }% with the provided job title. ${getScoreDescription(
+                      response.match_score
+                    )}`
+                  : `Your resume matches ${
+                      response.match_score
+                    }% with the provided job title. ${getScoreDescription(
+                      response.match_score
+                    )}`}
+              </p>
+
+              <div className={Style.suggestionDiv}>
+                <p className={Style.suggestionPara}>
+                  <strong>Suggestions</strong>
+                </p>
+                {response.suggestions.map((tip, index) => (
+                  <p key={index}>{tip}</p>
+                ))}
+              </div>
+
+              <div className={Style.suggestionDiv}>
+                <p className={Style.suggestionPara}>
+                  <strong>Tips</strong>
+                </p>
+                {response.tips.map((tip, index) => (
+                  <p key={index}>{tip}</p>
+                ))}
+              </div>
+
+              <button
+                className={Style.closeBtn}
+                onClick={() => setShowPopup(false)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+        <ToastContainer />
       </div>
-
-      {analysisResult && (
-        <div className="mt-6 w-full max-w-xl bg-white rounded-xl shadow-lg p-6">
-          <h2 className="text-xl font-bold mb-4">Analysis Result</h2>
-          <pre className="text-sm bg-gray-100 p-4 rounded-lg overflow-x-auto">
-            {JSON.stringify(analysisResult, null, 2)}
-          </pre>
-        </div>
-      )}
-    </div>
-
-
-  </>
+    </>
+  );
 }
 
-export default JDresumeAnalyzer
+export default JDResumeAnalyzer;

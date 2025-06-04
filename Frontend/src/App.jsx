@@ -6,8 +6,9 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import CreateAccount from "./Components/createAccount";
 import MainPage from "./Components/mainPage";
 import ProtectedRoute from "./Components/protectedRoute";
-import JDresumeAnalyzer from "./Components/jdresumeAnalyzer";
 import OverallResumeAnalyzer from "./Components/overallResumeAnanlyzer";
+import JDResumeAnalyzer from "./Components/jdresumeAnalyzer";
+import JDresumeAnalyzer1 from "./Components/jdresumeAnalyzer1";
 
 function App() {
   return (
@@ -46,7 +47,7 @@ function App() {
           />
 
           <Route path="/jdResumeAnalyzer" element={<ProtectedRoute>
-            <JDresumeAnalyzer/>
+            <JDResumeAnalyzer/>
           </ProtectedRoute>}/>
         </Routes>
       </BrowserRouter>
