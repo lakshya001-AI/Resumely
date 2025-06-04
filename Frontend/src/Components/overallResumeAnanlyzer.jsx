@@ -103,6 +103,10 @@ function OverallResumeAnalyzer() {
     return "";
   };
 
+  function navigateToAiHelp() {
+    navigate("/aiHelp");
+  }
+
   return (
     <>
       <div className={Style.mainDiv}>
@@ -120,10 +124,13 @@ function OverallResumeAnalyzer() {
                 </Link>
                 <Link className={Style.linkElementNavBar}>Resume</Link>
                 <Link className={Style.linkElementNavBar}>Cover Letter</Link>
-                <Link className={Style.linkElementNavBar}>Pricing</Link>
               </div>
 
               <div className={Style.ProfileBtnNavBarMainPage}>
+                <button className={Style.profileBtn} onClick={navigateToAiHelp}>
+                  Ask AI
+                </button>
+
                 <button
                   className={Style.profileBtn}
                   onClick={() => setShowUserInfo(!showUserInfo)}
@@ -220,33 +227,27 @@ function OverallResumeAnalyzer() {
 
               <div className={Style.suggestionDiv}>
                 <p className={Style.suggestionPara}>
-                <strong>Suggestions</strong> 
-              </p>
-              <p>
-{response.suggestions.join(", ")}
-              </p>
-              </div>
-
-                            <div className={Style.suggestionDiv}>
-                <p className={Style.suggestionPara}>
-                <strong>Recommended Skills</strong> 
-              </p>
-              <p>
-{response.recommended_skills.join(", ")}
-              </p>
+                  <strong>Suggestions</strong>
+                </p>
+                <p>{response.suggestions.join(", ")}</p>
               </div>
 
               <div className={Style.suggestionDiv}>
-                 <p className={Style.suggestionPara}>
-                <strong>Tips</strong> 
-              </p>
-            
+                <p className={Style.suggestionPara}>
+                  <strong>Recommended Skills</strong>
+                </p>
+                <p>{response.recommended_skills.join(", ")}</p>
+              </div>
+
+              <div className={Style.suggestionDiv}>
+                <p className={Style.suggestionPara}>
+                  <strong>Tips</strong>
+                </p>
+
                 {response.resume_tips.map((tip, index) => (
                   <p key={index}>{tip}</p>
                 ))}
-           
               </div>
-
 
               <button
                 className={Style.closeBtn}

@@ -8,7 +8,7 @@ import MainPage from "./Components/mainPage";
 import ProtectedRoute from "./Components/protectedRoute";
 import OverallResumeAnalyzer from "./Components/overallResumeAnanlyzer";
 import JDResumeAnalyzer from "./Components/jdresumeAnalyzer";
-import JDresumeAnalyzer1 from "./Components/jdresumeAnalyzer1";
+import AIhelpPage from "./Components/AIhelpPage";
 
 function App() {
   return (
@@ -49,6 +49,12 @@ function App() {
           <Route path="/jdResumeAnalyzer" element={<ProtectedRoute>
             <JDResumeAnalyzer/>
           </ProtectedRoute>}/>
+
+           <Route path="/aiHelp" element={<ProtectedRoute>
+            <AIhelpPage/>
+          </ProtectedRoute>}/>
+
+
         </Routes>
       </BrowserRouter>
     </>

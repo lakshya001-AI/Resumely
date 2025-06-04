@@ -51,6 +51,10 @@ function MainPage() {
     });
   }
 
+  function navigateToAiHelp(){
+    navigate("/aiHelp");
+  }
+
   return (
     <div className={Style.mainDiv}>
       <div className={Style.mainPageMainDiv}>
@@ -70,12 +74,17 @@ function MainPage() {
               <Link className={Style.linkElementNavBar}>
                 Cover Letter
               </Link>
-              <Link className={Style.linkElementNavBar}>
-                Pricing
-              </Link>
             </div>
           
           <div className={Style.ProfileBtnNavBarMainPage}>
+
+              <button
+              className={Style.profileBtn}
+              onClick={navigateToAiHelp}
+            >
+              Ask AI
+            </button>
+
             <button
               className={Style.profileBtn}
               onClick={() => setShowUserInfo(!showUserInfo)}
