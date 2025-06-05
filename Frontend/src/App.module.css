@@ -1116,8 +1116,7 @@ html, body{
 }
 
 .recommendationPopUpContent{
-    width: 60%;
-    max-width: 700px;
+    width: 70%;
     display: flex;
     height: 40vmax;
     justify-content: center;
@@ -1131,6 +1130,7 @@ html, body{
     transition: all 0.4s ease-in-out; /* Smoother transition */
     color: #d1d1d1; /* Lighter gray text for a sleek contrast */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Elegant sans-serif font */
+    margin-top: 50px;
 }
 
 
@@ -1249,8 +1249,8 @@ html, body{
   flex-direction: row;
 }
 
-.recommendationBtnDivOption button{
-  width: 200px;
+.recommendationBtnDivOption button {
+  width: 250px;
   background: linear-gradient(to right, #4e89ff 0%, #8E54E9 100%);
   color: white;
   margin: 0px 5px;
@@ -1260,14 +1260,23 @@ html, body{
   outline: none;
   border: none;
   border-radius: 30px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
+.recommendationBtnDivOption button.activeBtn {
+  background: rgb(32, 32, 32);
+  color: white; /* Ensure the text color remains visible */
+}
+
+
+
 .responseDiv{
-  width: 100%;
+  width: 90%;
   height: 30vmax;
   overflow-y: auto;
   margin-top: 20px;
   padding: 10px;
+  overflow-x: hidden;
 }
 
 
@@ -1296,6 +1305,119 @@ html, body{
   justify-content: center;
   margin-top: 20px;
 }
+
+.recommendationContentDiv{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+
+.recommendationContentDiv1{
+  width: 50%;
+  height: 100%;
+  border-right: solid 1px white; 
+}
+
+.recommendationContentDiv2{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.recommendationContentDiv2Courses{
+  width: 100%;
+  height: 50%;
+  padding: 10px;
+}
+
+.coursesCss{
+  background: rgb(32, 32, 32);
+  color: white; /* Ensure the text color remains visible */
+  font-size: 17px;
+  font-weight: 400;
+  padding: 10px 30px;
+  margin-top: -10px;
+  margin-left: 10px;
+  border-radius: 30px;
+  width: fit-content;
+}
+
+.jobCss{
+  background: rgb(32, 32, 32);
+  color: white; /* Ensure the text color remains visible */
+  font-size: 17px;
+  font-weight: 400;
+  padding: 10px 30px;
+  margin-left: 20px;
+  margin-top: 50px;
+  margin-bottom: 5px;
+  border-radius: 30px;
+  width: fit-content;
+}
+
+.courseContendDiv{
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-left: 20px;
+  border: solid 1px rgb(145, 145, 145);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+
+.courseContendDiv p{
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.courseImgDiv{
+  width: 100%;
+  height: 44%;
+}
+
+
+.courseImgDiv img{
+  width: 100%;
+  height: 100%;
+}
+
+.recommendationContentDiv2Job{
+  width: 100%;
+  height: 50%;
+}
+
+
+.exploreBtnDiv{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.exploreBtnDiv button{
+  width: 100%;
+  padding: 5px;
+  margin-top: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+
+.allCoursesDiv{
+  display: flex;
+  flex-direction: row;
+}
+
+
+
+
+
 
 
 

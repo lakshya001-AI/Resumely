@@ -297,7 +297,12 @@ function AIhelpPage() {
           {recommendationPopUp && (
             <div className={Style.recommendationPopUpOverlay}>
               <div className={Style.recommendationPopUpContent}>
-                <div className={Style.recommendationBtnDivOption}>
+
+                <div className={Style.recommendationContentDiv}>
+
+                  {/* This div for the recommendation */}
+                  <div className={Style.recommendationContentDiv1}>
+                     <div className={Style.recommendationBtnDivOption}>
                   <button
                     onClick={handleCohereClick}
                     className={showCohere ? Style.activeBtn : ""}
@@ -321,14 +326,96 @@ function AIhelpPage() {
                     {formatRecommendation(geminiRecommendation)}
                   </div>
                 )}
-                <div className={Style.courierRecommendationDivBtn}>
-                  <button
-                    className={Style.closeRecommendationBtn}
-                    onClick={() => setRecommendationPopUp(false)}
-                  >
-                    Close
-                  </button>
+                  </div>
+
+
+                  {/* This div is for the courses and job */}
+                  <div className={Style.recommendationContentDiv2}>
+
+                    {/* This is for the courses */}
+                    <div className={Style.recommendationContentDiv2Courses}>
+
+                      <h1 className={Style.coursesCss}>Courses</h1>
+
+                      <div className={Style.allCoursesDiv}>
+
+                     
+
+                      <div className={Style.courseContendDiv}>
+                        <div className={Style.courseImgDiv}>
+                          <img src="https://kvch.in/assets-new/img/banner/machine_learning_training.webp" alt="" />
+                          <h4>Machine Learning</h4>
+                          <p><strong>Skills you'll gain:</strong> Data Ethics, Scikit Learn (Machine Learning Library) </p>
+                          <div className={Style.exploreBtnDiv}>
+                            <button>Explore</button>
+                          </div>
+
+                        </div>
+
+                      </div>
+
+
+                         <div className={Style.courseContendDiv}>
+                        <div className={Style.courseImgDiv}>
+                          <img src="https://vizuara.ai/wp-content/uploads/2024/12/ML-Fundamentals.png" alt="" />
+                          <h4>Machine Learning</h4>
+                          <p><strong>Skills you'll gain:</strong> Data Ethics, Scikit Learn (Machine Learning Library) </p>
+                          <div className={Style.exploreBtnDiv}>
+                            <button>Explore</button>
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                       </div>
+             
+
+                    </div>
+
+                    {/* This is for the Jobs */}
+
+                    <div className={Style.recommendationContentDiv2Job}>
+
+                      <h1 className={Style.jobCss}>Job postings</h1>
+
+                      <div className={Style.allCoursesDiv}>
+
+                        <div className={Style.courseContendDiv}>
+                        <div className={Style.courseImgDiv}>
+                          <h4> Machine Learning Engineer</h4>
+                          <p>Brain Capital AI • Indore, Madhya Pradesh • via Wellfound</p>
+                          <div className={Style.exploreBtnDiv}>
+                            <button>Explore</button>
+                          </div>
+
+                        </div>
+
+                      </div>
+
+
+                         <div className={Style.courseContendDiv}>
+                        <div className={Style.courseImgDiv}>
+                          <h4> Specialist – Machine Learning and AI</h4>
+                          <p>Verint • Bengaluru, Karnataka • via LinkedIn, Glassdoor</p>
+                          <div className={Style.exploreBtnDiv}>
+                            <button>Explore</button>
+                          </div>
+
+                        </div>
+
+                      </div>
+
+
+                       </div>
+
+                    </div>
+
+                  </div>
+
+
                 </div>
+              
               </div>
             </div>
           )}
