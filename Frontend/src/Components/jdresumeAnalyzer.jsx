@@ -111,15 +111,9 @@ function JDResumeAnalyzer() {
     return "";
   };
 
-
-  function navigateToAiHelp(){
+  function navigateToAiHelp() {
     navigate("/aiHelp");
   }
-
-
-  
-
-
 
   return (
     <>
@@ -141,12 +135,9 @@ function JDResumeAnalyzer() {
               </div>
 
               <div className={Style.ProfileBtnNavBarMainPage}>
-                   <button
-                              className={Style.profileBtn}
-                              onClick={navigateToAiHelp}
-                            >
-                              Ask AI
-                            </button>
+                <button className={Style.profileBtn} onClick={navigateToAiHelp}>
+                  Ask AI
+                </button>
 
                 <button
                   className={Style.profileBtn}
