@@ -48,7 +48,7 @@ const cohere = new CohereClient({
 
 // Root Route
 app.get("/", (req, res) => {
-  res.send("AspireBot Backend API");
+  res.send("Backend API");
 });
 
 // Create Account Route
@@ -156,6 +156,50 @@ const verifyToken = (req, res, next) => {
     res.status(401).send({ message: "Invalid or expired token." });
   }
 };
+
+// app.get("/checkingApi", async (req ,res)=>{
+
+//   try {
+
+//     const CohereResponse = await cohere.chat({
+//         model: "command-r-plus",
+//         message: "Hello how are you ?",
+//         temperature: 0.7,
+//         maxTokens: 500,
+//       });
+
+//       const geminiResponse = await axios.post(
+//         `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+//         {
+//           contents: [
+//             {
+//               parts: [
+//                 {
+//                   text: "Hello how are you ?",
+//                 },
+//               ],
+//             },
+//           ],
+//         },
+//         {
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//         }
+//       );
+
+//       console.log("Cohere Response: ", CohereResponse.text);
+//       console.log("Gemini Response: ", geminiResponse?.data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim());
+    
+    
+//   } catch (error) {
+//     console.log(error);
+//   }
+
+// });
+
+
+// Start the Server
 
 // Helper Function to Parse and Structure Recommendations
 const parseRecommendation = (text) => {
@@ -284,8 +328,6 @@ const generateResponse = async (platform, template) => {
         temperature: 0.7,
         maxTokens: 500,
       });
-      console.log("Cohere response:" + response);
-      
       return parseRecommendation(response.text.trim());
     } else if (platform === "gemini") {
       const response = await axios.post(
@@ -327,51 +369,42 @@ app.post("/counsel", verifyToken, async (req, res) => {
   }
 
   const template = `
-  // You are a career counselor providing detailed and personalized advice. Based on the following user inputs, provide:
-  // 1. Three specific career paths that align with their interests and goals.
-  // 2. Three key skills they should focus on learning to achieve their goals.
-  // 3. Three high-quality learning resources (online courses, books, or websites) with descriptions to help them get started.
+  You are a career counselor providing detailed and personalized advice. Based on the following user inputs, provide:
+  1. Three specific career paths that align with their interests and goals.
+  2. Three key skills they should focus on learning to achieve their goals.
+  3. Three high-quality learning resources (online courses, books, or websites) with descriptions to help them get started.
 
-  // User Interests:
-  // - ${interests}
+  User Interests:
+  - ${interests}
 
-  // Skills they want to learn:
-  // - ${skills_to_learn}
+  Skills they want to learn:
+  - ${skills_to_learn}
 
-  // Career Goals:
-  // - ${career_goals}
+  Career Goals:
+  - ${career_goals}
 
-  // Format the response as follows:
-  // Career Paths:
-  // 1. [Career Path 1]: [Description]
-  // 2. [Career Path 2]: [Description]
-  // 3. [Career Path 3]: [Description]
+  Format the response as follows:
+  Career Paths:
+  1. [Career Path 1]: [Description]
+  2. [Career Path 2]: [Description]
+  3. [Career Path 3]: [Description]
 
-  // Skills to Learn:
-  // 1. [Skill 1]: [Description]
-  // 2. [Skill 2]: [Description]
-  // 3. [Skill 3]: [Description]
+  Skills to Learn:
+  1. [Skill 1]: [Description]
+  2. [Skill 2]: [Description]
+  3. [Skill 3]: [Description]
 
-  // Learning Resources:
-  // 1. [Resource 1]: [Description and URL if applicable]
-  // 2. [Resource 2]: [Description and URL if applicable]
-  // 3. [Resource 3]: [Description and URL if applicable]
-  // `;
-
-
- 
-
+  Learning Resources:
+  1. [Resource 1]: [Description and URL if applicable]
+  2. [Resource 2]: [Description and URL if applicable]
+  3. [Resource 3]: [Description and URL if applicable]
+  `;
 
   try {
     const [cohereResponse, geminiResponse] = await Promise.all([
       generateResponse("cohere", template),
       generateResponse("gemini", template),
     ]);
-
-    console.log(cohereResponse);
-    console.log(geminiResponse);
-    
-    
 
     res.json({
       cohere_recommendation: cohereResponse,
@@ -383,8 +416,9 @@ app.post("/counsel", verifyToken, async (req, res) => {
   }
 });
 
-// Start the Server
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on Port ${PORT}`);
 });
+``

@@ -297,9 +297,6 @@ function AIhelpPage() {
           {recommendationPopUp && (
             <div className={Style.recommendationPopUpOverlay}>
               <div className={Style.recommendationPopUpContent}>
-                <div className={Style.courierRecommendationDiv}>
-                  <h2>Career Recommendations</h2>
-                </div>
                 <div className={Style.recommendationBtnDivOption}>
                   <button
                     onClick={handleCohereClick}

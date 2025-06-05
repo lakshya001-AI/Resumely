@@ -1250,7 +1250,7 @@ html, body{
 }
 
 .recommendationBtnDivOption button{
-  width: 300px;
+  width: 200px;
   background: linear-gradient(to right, #4e89ff 0%, #8E54E9 100%);
   color: white;
   margin: 0px 5px;
