@@ -238,7 +238,7 @@ function JDResumeAnalyzer() {
 
                   <div className={Style.labelAndInputBalancer}>
                     <label htmlFor="resume" className={Style.uploadLabel}>
-                      Please enter your Job title
+                      Please enter your Job Description
                     </label>
                     <input
                       type="text"
