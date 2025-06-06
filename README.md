@@ -140,25 +140,26 @@
 
 ---
 
-## Future Enhancements
-- Support for more fiat and cryptocurrencies.
-- Integration of additional APIs for market news and insights.
-- Mobile application version.
-- Buy and Sell cryptoCurrencies using Metamask Wallet
+## 🚀 **Future Enhancements**
+- 📊 Advanced analytics for resume trends in various industries.
+- 🌎 Localization for global users with multi-language support.
+- 📱 Mobile-friendly UI for easy access on the go.
+- 💼 Integration with job portals for seamless application tracking.
 
 ---
 
-## Contributing
+## 🤝 **Contributing**
 
-Contributions are welcome! Please fork this repository and submit a pull request with your changes.
-
----
-
-## Acknowledgements
-
-- [CoinGecko API](https://www.coingecko.com/en/api) for providing reliable cryptocurrency data.
-- Open-source libraries and tools used in this project.
+Want to contribute? We'd love your help! Fork the repository, create a feature branch, and submit a pull request.
 
 ---
 
-**Stay ahead in the crypto game with CryptoPulse!**
+## 💡 **Acknowledgements**
+A big shoutout to:
+
+- Gemini, Cohere, and LangChain for providing cutting-edge AI tools and support.
+- The open-source community for amazing tools and libraries.
+
+---
+
+**🎯 Optimize your career journey with Resumely—your gateway to professional success!**
