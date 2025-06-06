@@ -88,7 +88,7 @@
 
 1. Navigate to the Recommendation folder:
    ```bash
-     ccd Recommendation
+     cd Recommendation
      ```
 2. Create and activate a Python virtual environment:
    ```bash
@@ -102,29 +102,40 @@
    
 ---
 
-## Screenshots
+## **🌟 Platform Images**
 
 1. **Login Page:**
-   ![Login Page](https://i.imgur.com/slJppQo.png)
+   ![Login Page](https://github.com/lakshya001-AI/Resumely/blob/main/Resumely_Images/LoginPageResumely.png?raw=true)
 
-2. **Home Page:**
-   ![Home Page](https://i.imgur.com/1d6GDXk.png)
+2. **Create Account Page:**
+   ![Create account page](https://github.com/lakshya001-AI/Resumely/blob/main/Resumely_Images/createAccountPageResumely.png?raw=true)
 
-3. **Top Currencies Prices:**
-   ![Top Currencies](https://i.imgur.com/fH1C3w1.png)
+3. **Main Page:**
+   ![main page](https://github.com/lakshya001-AI/Resumely/blob/main/Resumely_Images/mainPageResumely.png?raw=true)
 
-4. **Currencies Page:**
-   ![Currencies Page](https://i.imgur.com/HpETiH4.png)
+4. **Options for Resume Analysis:**
+   ![option for resume analysis](https://github.com/lakshya001-AI/Resumely/blob/main/Resumely_Images/chooseOptionResumely.png?raw=true)
 
-5. **Currency Details and Daily Price Trend Chart:**
-   ![Currencies Detail Page](https://i.imgur.com/rYHLa6P.png)
+5. **General Resume Analysis Page:**
+   ![general resume analysis](https://github.com/lakshya001-AI/Resumely/blob/main/Resumely_Images/general_resume_Analyzer_resumely.png?raw=true)
 
-6. **Favorite Currency Page:**
-   ![Favorite Currency Page](https://i.imgur.com/26Ow0VE.png)
+6. **General Resume Analysis Result:**
+   ![general resume analysis](https://github.com/lakshya001-AI/Resumely/blob/main/Resumely_Images/general_resume_Analyzer_result_resumely.png?raw=true)
 
-7. **Currency Converter Page:**
-   ![Currency Converter Page](https://i.imgur.com/d3hDb37.png)
+7. **Job Description Based Resume Analyzer Page:**
+   ![job description based resume analyzer page](https://github.com/lakshya001-AI/Resumely/blob/main/Resumely_Images/Job_based_resume_Analyzer1.png?raw=true)
    
+8. **Job Description Based Resume Analyzer Result:**
+   ![Job Description Based Resume Analyzer Result](https://github.com/lakshya001-AI/Resumely/blob/main/Resumely_Images/Job_based_resume_Analyzer_result.png?raw=true)
+
+9. **AI Help Page:**
+   ![AI Help Page](https://github.com/lakshya001-AI/Resumely/blob/main/Resumely_Images/ai_Help_resumely.png?raw=true)
+
+10. **AI Help Input Form:**
+   ![AI Help Input Form](https://github.com/lakshya001-AI/Resumely/blob/main/Resumely_Images/ai_Help_resumely_inputs.png?raw=true)
+
+10. **AI Help Output:**
+   ![AI Help Output](https://github.com/lakshya001-AI/Resumely/blob/main/Resumely_Images/ai_Help_resumely_output.png?raw=true)
    
 
 ---
