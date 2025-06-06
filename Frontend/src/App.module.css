@@ -797,7 +797,7 @@ html, body{
   width: 60%;
     max-width: 600px;
     display: flex;
-    height: 610px;
+    height: 710px;
     flex-direction: column;
     padding: 20px 40px;
     border-radius: 20px;
@@ -879,6 +879,7 @@ html, body{
 .closeBtn{
   margin-top: 20px;
   padding: 10px;
+  cursor: pointer;
 }
 
 
@@ -1412,6 +1413,22 @@ html, body{
 .allCoursesDiv{
   display: flex;
   flex-direction: row;
+}
+
+
+.downloadPDFBtn{
+  margin-top: 20px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+
+@media print {
+  .OverAllResumepopupContent {
+    width: 100%;
+    padding: 20px;
+    font-size: 12px;
+  }
 }
 
 

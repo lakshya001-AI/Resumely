@@ -8,6 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { Gauge } from "@mui/x-charts"; // Correct import from MUI X Charts
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 function OverallResumeAnalyzer() {
   const navigate = useNavigate();
@@ -106,6 +108,38 @@ function OverallResumeAnalyzer() {
   function navigateToAiHelp() {
     navigate("/aiHelp");
   }
+
+
+  const generatePDF = () => {
+  // Select the content to be included in the PDF
+  const element = document.querySelector(`.${Style.OverAllResumepopupContent}`);
+
+  if (!element) {
+    console.error("Element for PDF generation not found.");
+    return;
+  }
+
+  // Convert the content to a canvas
+  html2canvas(element).then((canvas) => {
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF({
+      orientation: "portrait",
+      unit: "mm",
+      format: "a4",
+    });
+
+    // Add the canvas image to the PDF
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+
+    // Save the PDF
+    pdf.save("Resume_Report.pdf");
+  });
+};
+
+
 
   return (
     <>
@@ -248,6 +282,10 @@ function OverallResumeAnalyzer() {
                   <p key={index}>{tip}</p>
                 ))}
               </div>
+
+              <button className={Style.downloadPDFBtn} onClick={generatePDF}>
+                Download PDF Report
+              </button>
 
               <button
                 className={Style.closeBtn}

@@ -5,7 +5,6 @@ from pathlib import Path
 import os
 import chardet  # type: ignore
 import re
-
 import fitz  # PyMuPDF for PDF text extraction, must be installed
 
 # Load the Spacy NLP model
@@ -45,6 +44,7 @@ def analyze_resume_with_title():
         match_score = calculate_match_score(parsed_resume, job_title)
         suggestions = generate_title_based_suggestions(parsed_resume, job_title)
         tips = generate_tips(parsed_resume)
+        recommended_skills = recommend_skills("Data Science")
 
         # Debugging: Print match score and suggestions
         print("Match Score:", match_score)
@@ -56,11 +56,15 @@ def analyze_resume_with_title():
             'parsed_resume': parsed_resume,
             'match_score': match_score,
             'suggestions': suggestions,
-            'tips': tips
+            'tips': tips,
+            'recommended_skills': recommended_skills
         })
     except Exception as e:
         # Handle any unexpected errors
         return jsonify({'error': str(e)}), 500
+    
+    
+    
 
 
 def is_valid_name(name):
@@ -211,6 +215,18 @@ def generate_tips(resume_data):
 
     return tips
 
+def recommend_skills(job_field):
+    """
+    Recommend skills based on the job field.
+    """
+    skills = {
+        "Data Science": ["Python", "R", "SQL", "Machine Learning", "Deep Learning"],
+        "Web Development": ["HTML", "CSS", "JavaScript", "React", "Node.js"],
+        "Mobile Development": ["Kotlin", "Swift", "Flutter", "React Native"],
+        "Cybersecurity": ["Network Security", "Penetration Testing", "Cryptography", "Firewalls"],
+        "Cloud Computing": ["AWS", "Azure", "Docker", "Kubernetes", "DevOps"]
+    }
+    return skills.get(job_field, ["No specific skills recommended for this field."])
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8000)
