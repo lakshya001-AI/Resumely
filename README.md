@@ -2,7 +2,7 @@
 
 ![Resumely](https://www.0x.day/_next/image?url=%2Fassets%2FCodingNinjas2%2FCover_Photo.png&w=3840&q=75)
 
-**Resumely** is an AI-driven tool that analyzes resumes, matches them with job titles, and provides personalized improvement suggestions. It extracts key details, evaluates alignment, and recommends skills, making it easier for job seekers to optimize their profiles and for recruiters to assess candidates effectively.
+**Resumely** is an AI-driven tool that analyzes resumes, matches them with job titles or Description, and provides personalized improvement suggestions. It extracts key details, evaluates alignment, and recommends skills, making it easier for job seekers to optimize their profiles and for recruiters to assess candidates effectively.
 
 ---
 
@@ -11,8 +11,8 @@
 ### 📝 **General Resume Analyzer**
 - This AI-powered tool analyzes your resume, provides a score, and offers actionable suggestions, recommended skills, and tips to help your resume stand out in the hiring process.
 
-### 🎯 **Job Title-Based Analyzer**
-- This feature analyzes your resume based on specific job titles, matches it with job requirements, and provides a score, suggestions, and tips to align your resume with the role.
+### 🎯 **Job Description-Based Analyzer**
+- This feature analyzes your resume based on specific job titles or Description, matches it with job requirements, and provides a score, suggestions, and tips to align your resume with the role.
   
 ### 💡 **AI-Powered Career Help**
 - Powered by LangChain, Cohere, and Gemini, this feature provides personalized career guidance by analyzing your interests, skills, and goals to recommend career paths, skills, and resources.
@@ -27,7 +27,7 @@
 | **DATABASE**    | MongoDB                                                                        |
 | **API's**         | Google Gemini, Cohere API                               |
 | **AUTHENTICATION**         | JWT Tokens, Google Sign-in                               |
-| **AI/ML**         | Flask, Spacy, Chardet, Langchain                               |
+| **AI/ML**         | Flask, Spacy, Chardet, Langchain, TF/IDF, Cosine Similarity                               |
 
 ---
 
