@@ -6,6 +6,8 @@ import os
 import chardet  # type: ignore
 import re
 import fitz  # PyMuPDF for PDF text extraction, must be installed
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 # Load the Spacy NLP model
 nlp = spacy.load("en_core_web_sm")
@@ -165,18 +167,26 @@ def parse_resume(resume_path):
 
 def calculate_match_score(resume_data, job_title):
     """
-    Calculate match score between resume job title and provided job title.
+    Calculate match score using TF-IDF and cosine similarity between job title/description and resume content.
     """
-    resume_job_title = resume_data.get("job_title", "").lower()
-    provided_job_title = job_title.lower()
+    resume_content = (
+        f"{resume_data.get('job_title', '')} "
+        f"{' '.join(resume_data.get('skills', []))}"
+    )
 
-    # Simple match score calculation based on exact and partial match
-    if resume_job_title == provided_job_title:
-        return "100"
-    elif provided_job_title in resume_job_title or resume_job_title in provided_job_title:
-        return "75"
-    else:
-        return "0"
+    # Combine texts for vectorization
+    texts = [job_title.lower(), resume_content.lower()]
+
+    # Use TF-IDF to vectorize the texts
+    tfidf_vectorizer = TfidfVectorizer()
+    tfidf_matrix = tfidf_vectorizer.fit_transform(texts)
+
+    # Compute cosine similarity
+    similarity = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[1:2])[0][0]
+
+    # Convert similarity to percentage score
+    return round(similarity * 100, 2)
+
 
 
 def generate_title_based_suggestions(resume_data, job_title):

@@ -105,9 +105,11 @@ function JDResumeAnalyzer() {
   const getScoreDescription = (score) => {
     if (score < 30) {
       return "Your resume score is poor. Consider improving your resume.";
-    } else if (score >= 30 && score < 75) {
-      return "Your resume score is good. Keep improving!";
-    } else if (score >= 75) {
+    } else if (score >= 30 && score < 50) {
+      return "Your resume score is Average. Keep improving!";
+    } else if (score >= 50 && score < 80) {
+      return "Your resume score is Good. Keep improving!";
+    } else if (score >= 80) {
       return "Your resume score is excellent! Great job!";
     }
     return "";
@@ -269,7 +271,7 @@ function JDResumeAnalyzer() {
               <h2>Analysis</h2>
               <div className={Style.gaugeDiv}>
                 <Gauge
-                  value={Number(response.match_score)}
+                  value={parseInt(Number(response.match_score))}
                   min={0}
                   max={100}
                   startAngle={-90}
@@ -281,7 +283,7 @@ function JDResumeAnalyzer() {
               <p className={Style.userNameAndScorePara}>
                 {response.parsed_resume.name
                   ? `${response.parsed_resume.name}, your resume matches ${
-                      response.match_score
+                      parseInt(Number(response.match_score))
                     }% with the provided job title. ${getScoreDescription(
                       response.match_score
                     )}`
